@@ -28,10 +28,12 @@ Make sure you have `linux-headers` installed.
 $ make
 ```
 
-To hide the module from kernel, compile with `-DHIDE_MODULE`:
+To hide the module from kernel, compile with `-DHIDE_MODULE`. You can also
+change the buffer size `BUFLEN` that is used to store key events. By default it
+is 1024 bytes.
 
 ```console
-$ KCPPFLAGS="-DHIDE_MODULE" make
+$ KCPPFLAGS="-DHIDE_MODULE -DBUFLEN=2048" make
 ```
 
 ## Development

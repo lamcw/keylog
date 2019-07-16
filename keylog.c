@@ -17,7 +17,9 @@ MODULE_LICENSE("GPL");
 #define DEVICE_NAME "kl0"
 unsigned major;
 
+#ifndef BUFLEN
 #define BUFLEN 1024
+#endif
 static char input_buf[BUFLEN];
 unsigned buf_count = 0;
 
